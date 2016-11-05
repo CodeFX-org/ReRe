@@ -14,9 +14,37 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <kotlin.version>1.0.4</kotlin.version>
         <junit.version>4.12</junit.version>
-    </properties>
+		<rxjava.version>1.2.1</rxjava.version>
+		<rxapache-http.version>0.21.0</rxapache-http.version>
+		<httpasyncclient.version>4.0</httpasyncclient.version>
+	</properties>
 
     <dependencies>
+		<!-- Reactive -->
+		<dependency>
+			<groupId>io.reactivex</groupId>
+			<artifactId>rxjava</artifactId>
+			<version>${rxjava.version}</version>
+		</dependency>
+		<!-- HTTP -->
+		<dependency>
+			<groupId>io.reactivex</groupId>
+			<artifactId>rxapache-http</artifactId>
+			<version>${rxapache-http.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpasyncclient</artifactId>
+			<version>${httpasyncclient.version}</version>
+		</dependency>
+		<!--Testing -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- Kotlin -->
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-stdlib</artifactId>
@@ -26,12 +54,6 @@
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-test-junit</artifactId>
             <version>${kotlin.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
