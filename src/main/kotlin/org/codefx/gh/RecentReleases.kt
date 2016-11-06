@@ -1,11 +1,14 @@
 package org.codefx.gh
 
 fun main(args: Array<String>) {
-    val http = Http("https://api.github.com")
+    val gh = GitHub()
 
-    http.getContent("/zen")
+    gh.zen()
+            .toBlocking().subscribe(::println)
+    gh.searchRepositoriesByLanguage("java", SortBy.STARS, SortOrder.DESCENDING, 100)
+            .flatMap(::releaseUrlsFromSearchResponse)
             .toBlocking()
             .subscribe(::println)
 
-    http.close()
+    gh.close()
 }
