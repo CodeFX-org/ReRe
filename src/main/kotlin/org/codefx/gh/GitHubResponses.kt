@@ -53,34 +53,34 @@ private fun parseFullRelease(release: JsonObject): FullRelease {
 
 // TAGS
 
-fun tags(tags: String) : Observable<String> {
+fun tags(tags: String): Observable<String> {
     return Observable.from(parseTags(tags))
 }
 
-private fun parseTags(tags: String) : List<String> {
+private fun parseTags(tags: String): List<String> {
     return JsonParser()
             .parse(tags).asJsonArray
             .map { it.toString() }
 }
 
-fun extractCommitApiUrl(tag: String) : String {
+fun extractCommitApiUrl(tag: String): String {
     return JsonParser()
             .parse(tag).asJsonObject
             .get("commit").asJsonObject
             .get("url").asString
 }
 
-fun extractTagName(tag: String) : String {
+fun extractTagName(tag: String): String {
     return JsonParser()
             .parse(tag).asJsonObject
             .get("name").asString
 }
 
-fun tag(tagName : String, commit: String) : Observable<Tag> {
+fun tag(tagName: String, commit: String): Observable<Tag> {
     return Observable.just(parseTag(tagName, commit))
 }
 
-private fun parseTag(tagName : String, commit: String): Tag {
+private fun parseTag(tagName: String, commit: String): Tag {
     val json = JsonParser()
             .parse(commit).asJsonObject
     return Tag(

@@ -11,7 +11,7 @@ interface Release {
     val date: ZonedDateTime
     val url: String
 
-    fun asString() : String {
+    fun asString(): String {
         return "$name (${date.format(RELEASE_DATE_FORMATTER)}, $url)"
     }
 
