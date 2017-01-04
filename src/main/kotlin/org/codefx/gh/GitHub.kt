@@ -6,10 +6,10 @@ val GITHUB_URL = "https://api.github.com"
 
 class GitHub(val http : Http) : AutoCloseable {
 
-    constructor() : this(Http(GITHUB_URL))
+    constructor() : this(Http())
 
     fun zen() : Observable<String> {
-        return http.getContent("/zen")
+        return http.getContent(GITHUB_URL + "/zen")
     }
 
     fun searchRepositoriesByLanguage(lang : String, sortBy : SortBy? = null, sortOrder : SortOrder? = null, perPage: Int = 100) : Observable<String> {
@@ -18,7 +18,23 @@ class GitHub(val http : Http) : AutoCloseable {
         sortBy?.run { searchPath += "&sort=" + sortBy.inUrl }
         sortOrder?.run { searchPath += "&order=" + sortOrder.inUrl }
         perPage.run { searchPath += "&per_page=" + perPage}
-        return http.getContent(searchPath)
+        return http.getContent(GITHUB_URL + searchPath)
+    }
+
+    fun listFullReleases(fullReleasesUrl : String) : Observable<String> {
+        return http.getContent(fullReleasesUrl)
+    }
+
+    fun listFullReleases(owner: String, repo: String) : Observable<String> {
+        return http.getContent(GITHUB_URL + "/repos/$owner/$repo/releases")
+    }
+
+    fun listTags(tagsUrl : String) : Observable<String> {
+        return http.getContent(tagsUrl)
+    }
+
+    fun showCommit(commitUrl : String) : Observable<String> {
+        return http.getContent(commitUrl)
     }
 
     override fun close() {

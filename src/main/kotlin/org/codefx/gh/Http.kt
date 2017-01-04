@@ -2,24 +2,24 @@ package org.codefx.gh
 
 import org.apache.http.impl.nio.client.CloseableHttpAsyncClient
 import org.apache.http.impl.nio.client.HttpAsyncClients
+import org.apache.http.message.BasicHeader
 import rx.Observable
 import rx.apache.http.ObservableHttp
 import rx.apache.http.ObservableHttpResponse
 import java.nio.charset.Charset
 
-class Http(val root: String, val httpClient: CloseableHttpAsyncClient) : AutoCloseable {
+class Http(val httpClient: CloseableHttpAsyncClient) : AutoCloseable {
 
-    constructor(root: String) : this(root, defaultHttpClient())
+    constructor() : this(defaultHttpClient())
 
     fun get(path: String): Observable<ObservableHttpResponse> {
         return ObservableHttp
-                .createGet(root + path, httpClient)
+                .createGet(path, httpClient)
                 .toObservable()
     }
 
     fun getContent(path: String): Observable<String> {
         return get(path)
-//                .doOnNext { println(it.response.statusLine) }
                 .flatMap { it.content }
                 .map { it.toString(Charset.defaultCharset()) }
     }
