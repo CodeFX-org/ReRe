@@ -1,4 +1,4 @@
-package org.codefx.gh
+package org.codefx.gh.rere
 
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
@@ -11,16 +11,16 @@ import java.time.ZonedDateTime
 
 // CONTENT URLs
 
-fun contentUrlsFromSearchResponse(searchResult: String): Observable<ContentUrls> {
-    return Observable.from(parseContentUrlsFromSearchResponse(searchResult))
+fun contentUrlsFromSearchResponse(searchResult: String): rx.Observable<org.codefx.gh.rere.ContentUrls> {
+    return rx.Observable.from(org.codefx.gh.rere.parseContentUrlsFromSearchResponse(searchResult))
 }
 
-private fun parseContentUrlsFromSearchResponse(searchResult: String): List<ContentUrls> {
-    return JsonParser()
+private fun parseContentUrlsFromSearchResponse(searchResult: String): List<org.codefx.gh.rere.ContentUrls> {
+    return com.google.gson.JsonParser()
             .parse(searchResult).asJsonObject
             .get("items").asJsonArray
             .map { it.asJsonObject }
-            .map(::parseContentUrls)
+            .map(::(org.codefx.gh.rere.parseContentUrls))
 }
 
 private fun parseContentUrls(project: JsonObject): ContentUrls {
