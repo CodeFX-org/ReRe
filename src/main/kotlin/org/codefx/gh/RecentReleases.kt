@@ -1,9 +1,11 @@
 package org.codefx.gh
 
 import rx.Observable
+import java.lang.Integer.max
 
 fun main(args: Array<String>) {
-    val gh = GitHub()
+    val token = extractToken(args) ?: throw IllegalArgumentException("Specify a token with -t or --token")
+    val gh = GitHub(token)
 
     gh.zen()
             .subscribe(::println)
@@ -16,6 +18,11 @@ fun main(args: Array<String>) {
             .subscribe(::println)
 
     gh.close()
+}
+
+private fun extractToken(args: Array<String>): String? {
+    val tokenIndex = max(args.indexOf("-t"), args.indexOf("--token")) + 1
+    return if (tokenIndex == 0 || tokenIndex == args.size) null else args[tokenIndex]
 }
 
 private fun listReleases(gh: GitHub, urls: ContentUrls): Observable<Release> {

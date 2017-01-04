@@ -1,12 +1,15 @@
 package org.codefx.gh
 
+import org.apache.http.impl.nio.client.CloseableHttpAsyncClient
+import org.apache.http.impl.nio.client.HttpAsyncClients
+import org.apache.http.message.BasicHeader
 import rx.Observable
 
 val GITHUB_URL = "https://api.github.com"
 
 class GitHub(val http : Http) : AutoCloseable {
 
-    constructor() : this(Http())
+    constructor(token: String) : this(Http(githubHttpClientWith(token)))
 
     fun zen() : Observable<String> {
         return http.getContent(GITHUB_URL + "/zen")
@@ -49,4 +52,10 @@ enum class SortBy(val inUrl : String) {
 
 enum class SortOrder(val inUrl : String) {
     ASCENDING("asc"), DESCENDING("desc")
+}
+
+private fun githubHttpClientWith(token: String): CloseableHttpAsyncClient {
+    return HttpAsyncClients.custom()
+            .setDefaultHeaders(listOf(BasicHeader("Authorization", "token $token")))
+            .build()
 }
