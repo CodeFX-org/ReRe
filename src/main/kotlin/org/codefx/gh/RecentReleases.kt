@@ -4,14 +4,15 @@ import rx.Observable
 
 fun main(args: Array<String>) {
     val arguments = parse(args)
-    val gh = GitHub(arguments.token)
 
+    val gh = GitHub(arguments.token)
     gh.zen()
             .subscribe(::println)
     gh.searchRepositoriesByLanguage("java", SortBy.STARS, SortOrder.DESCENDING, 2)
 //            .doOnNext(::println)
             .flatMap(::contentUrlsFromSearchResponse)
             .flatMap { contentUrl -> listReleases(gh, contentUrl) }
+            .filter { it.date.isAfter(arguments.since) }
             .map { it.asString() }
             .toBlocking()
             .subscribe(::println)
