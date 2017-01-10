@@ -20,7 +20,7 @@ private fun parseContentUrlsFromSearchResponse(searchResult: String): List<org.c
             .parse(searchResult).asJsonObject
             .get("items").asJsonArray
             .map { it.asJsonObject }
-            .map(::(org.codefx.gh.rere.parseContentUrls))
+            .map(::parseContentUrls)
 }
 
 private fun parseContentUrls(project: JsonObject): ContentUrls {
