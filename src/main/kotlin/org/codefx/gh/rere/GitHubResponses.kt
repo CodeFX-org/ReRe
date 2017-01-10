@@ -11,12 +11,12 @@ import java.time.ZonedDateTime
 
 // CONTENT URLs
 
-fun contentUrlsFromSearchResponse(searchResult: String): rx.Observable<org.codefx.gh.rere.ContentUrls> {
-    return rx.Observable.from(org.codefx.gh.rere.parseContentUrlsFromSearchResponse(searchResult))
+fun contentUrlsFromSearchResponse(searchResult: String): rx.Observable<ContentUrls> {
+    return rx.Observable.from(parseContentUrlsFromSearchResponse(searchResult))
 }
 
-private fun parseContentUrlsFromSearchResponse(searchResult: String): List<org.codefx.gh.rere.ContentUrls> {
-    return com.google.gson.JsonParser()
+private fun parseContentUrlsFromSearchResponse(searchResult: String): List<ContentUrls> {
+    return JsonParser()
             .parse(searchResult).asJsonObject
             .get("items").asJsonArray
             .map { it.asJsonObject }
